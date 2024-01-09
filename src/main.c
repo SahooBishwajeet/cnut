@@ -1,31 +1,9 @@
-#include <stdio.h>
-#include <unistd.h>
-#include <string.h>
-#include <stdlib.h>
-#include <stdbool.h>
-#include <math.h>
+#include "common.h"
 
-#define PI 3.14159
+float *z_buffer;
+char *pixel_buffer;
 
-#define SCREEN_WIDTH 80
-#define SCREEN_HEIGHT 22
-#define SCREEN_X_CENTER (SCREEN_WIDTH / 2)
-#define SCREEN_Y_CENTER (SCREEN_HEIGHT / 2)
-#define X_SCALE (SCREEN_WIDTH / 2 - 10)
-#define Y_SCALE (X_SCALE / 2)
-#define VIEW_DISTANCE 5
-
-#define R1 1
-#define R2 2
-
-#define DONUT_STEP 0.07
-#define ROTATION_STEP 0.02
-#define LUMINANCE 8
-
-#define X_AXIS_ROTATION 0.00004
-#define Z_AXIS_ROTATION 0.00002
-
-int main(int argc, char const *argv[]) {
+int main() {
     float A = 0, B = 0;     // Angles
     float i, j;             // Iterators (To create the donut)
     int k;                  // Iterator (To render the donut)
@@ -45,8 +23,8 @@ int main(int argc, char const *argv[]) {
         float cos_A = cos(A);
         float cos_B = cos(B);
 
-        for(j = 0; j < (2 * PI); j += DONUT_STEP) {                 // Build the donut
-            for (i = 0; i < (2 * PI); i += ROTATION_STEP) {        // Rotate the donut
+        for(j = 0; j < (2 * M_PI); j += CIRCLE_STEP) {                 // Build the donut
+            for (i = 0; i < (2 * M_PI); i += DONUT_STEP) {        // Rotate the donut
                 float sin_phi = sin(i);
                 float cos_phi = cos(i);
                 float sin_theta = sin(j);
@@ -80,6 +58,3 @@ int main(int argc, char const *argv[]) {
     }
     return 0; 
 }
-
-
-
