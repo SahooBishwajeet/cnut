@@ -1,12 +1,22 @@
 #include "common.h"
-
-float *z_buffer;
-char *pixel_buffer;
+#include "interrupt.h"
+#include "draw.h"
 
 int main() {
+    signal(SIGINT, interrupt);
+    // printf(CSI "?25l");  // Make Cursor Invisible
+
+    struct winsize size;
+    ioctl(STDIN_FILENO, TIOCGWINSZ, &size);     // Get terminal size
+
+    // const int rows = size.ws_row;            // Number of rows on terminal
+    // const int cols = size.ws_col;            // Number of columns on terminal
+    
+    // const int x_center = rows / 2;
+    // const int y_center = cols / 2;
+
     float A = 0, B = 0;     // Angles
     float i, j;             // Iterators (To create the donut)
-    int k;                  // Iterator (To render the donut)
 
     // z-buffer and character buffer
     float z[SCREEN_HEIGHT * SCREEN_WIDTH];
@@ -47,12 +57,8 @@ int main() {
                 }
             }
         }
-        printf("\x1b[H");   // Put cursor at home
-        for(k = 0; k < SCREEN_HEIGHT * SCREEN_WIDTH + 1; k++) {
-            putchar(k % SCREEN_WIDTH ? b[k] : 10);
-            A += X_AXIS_ROTATION;
-            B += Z_AXIS_ROTATION;
-        }
+        
+        draw(b, sizeof(b), &A, &B);
 
         usleep(30000);
     }

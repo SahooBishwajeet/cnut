@@ -4,6 +4,7 @@
 #include <stdlib.h>
 #include <stdbool.h>
 #include <stddef.h>
+#include <signal.h>
 #include <time.h>
 #include <unistd.h>
 #include <sys/ioctl.h>
@@ -42,6 +43,6 @@
 #define X_SCALE (SCREEN_WIDTH / 2 - 10)
 #define Y_SCALE (X_SCALE / 2)
 
-// Global Variables
-extern float *z_buffer;
-extern char *pixel_buffer;
+// // Global Variables
+// extern float *z_buffer;
+// extern char *pixel_buffer;
